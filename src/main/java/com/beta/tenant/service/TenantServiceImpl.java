@@ -94,6 +94,24 @@ public class TenantServiceImpl implements ITenantService{
 		}
 		return owner;
 	}
+
+	@Override
+	public List<Owner> findAllOwners() throws TenantException {
+		return ownerDao.findAll();
+	}
+
+	@Override
+	public Owner deleteOwnerById(int ownerId) throws TenantException {
+		Owner or1 = null;
+		Optional<Owner> orr = ownerDao.findById(ownerId);
+		if (orr.isPresent()) {
+			or1 = orr.get();
+			ownerDao.deleteById(ownerId);
+		} else {
+			throw new TenantException(str);
+		}
+		return or1;
+	}
 	
 	
 }

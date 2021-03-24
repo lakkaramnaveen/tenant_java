@@ -21,13 +21,13 @@ import com.beta.tenant.service.ITenantService;
 
 
 @RestController
-@CrossOrigin("*") 	//origins=""
+@CrossOrigin(origins = "*") 	//origins=""
 public class TenantController {
 
 	@Autowired 
 	ITenantService tenantService;
 
-	@GetMapping("owner/login/{user}/{pass}")//login as owner
+	@PostMapping("owner/login/{user}/{pass}")//login as owner
 	public ResponseEntity<Boolean>  findUserLogin(@PathVariable("user") String ownerName, @PathVariable("pass") String ownerPassword) throws TenantException
 	{
 		return new ResponseEntity<>(tenantService.validateOwner(ownerName,ownerPassword),HttpStatus.ACCEPTED);
@@ -37,6 +37,12 @@ public class TenantController {
 	@GetMapping("owner/tenant")//list of all tenants
 	public ResponseEntity<List<Tenant>> findAllTenants() throws TenantException {
 		return new ResponseEntity<>(tenantService.findAllTenants(), HttpStatus.OK);
+
+	}
+	
+	@GetMapping("owner")//list of all tenants
+	public ResponseEntity<List<Owner>> findAllOwners() throws TenantException {
+		return new ResponseEntity<>(tenantService.findAllOwners(), HttpStatus.OK);
 
 	}
 
@@ -62,6 +68,11 @@ public class TenantController {
 	@DeleteMapping("owner/tenant/{id}")// delete tenant by id
 	public ResponseEntity<Tenant> deleteTenantById(@PathVariable("id") int tenantId) throws TenantException {
 		return new ResponseEntity<>(tenantService.deleteTenantById(tenantId), HttpStatus.OK);
+	}
+	
+	@DeleteMapping("owner/{id}")// delete owner by id
+	public ResponseEntity<Owner> deleteOwnerById(@PathVariable("id") int ownerId) throws TenantException {
+		return new ResponseEntity<>(tenantService.deleteOwnerById(ownerId), HttpStatus.OK);
 	}
 
 	// -------------------------------------------------------------------------------------------------------------------------

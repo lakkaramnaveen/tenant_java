@@ -14,4 +14,6 @@ public interface ITenantService {
 	public Owner createOwner(Owner owner);
 	public List<Tenant> findAllTenants() throws TenantException;
 	public Owner updateOwnerById(Owner owner) throws TenantException;
+	public List<Owner> findAllOwners() throws TenantException;
+	public Owner deleteOwnerById(int ownerId) throws TenantException;
 }
